@@ -33,3 +33,16 @@
   margin: 1rem;
   font-size: 1.25rem;
 }
+
+.tabs {
+  margin-bottom: 20px;
+}
+
+.tabs button {
+  margin-right: 5px;
+}
+
+.active-tab {
+  font-weight: bold;
+}
+
