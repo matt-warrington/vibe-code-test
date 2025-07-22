@@ -1,0 +1,42 @@
+/* Approximate style inspired by GraphOn.com */
+:root {
+    --primary-color: #003366;
+    --secondary-color: #0050A0;
+    --accent-color: #007bff;
+    --text-color: #333;
+    --background-color: #fff;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: var(--text-color);
+    background-color: var(--background-color);
+}
+
+header, footer {
+    background-color: var(--primary-color);
+    color: #fff;
+    padding: 1rem;
+}
+
+button, .btn {
+    background-color: var(--accent-color);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover, .btn:hover {
+    background-color: var(--secondary-color);
+}
+
+a {
+    color: var(--secondary-color);
+}
+
+a:hover {
+    color: var(--accent-color);
+}
