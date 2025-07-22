@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import GameBoard from './GameBoard';
 import Chat from './Chat';
 import './Chat.css';
 import './App.css';
@@ -48,30 +49,52 @@ function App() {
     setXIsNext(true);
   }
 
+  function addGame() {
+    const id = nextId.current++;
+    setGames([
+      ...games,
+      { id, squares: Array(9).fill(null), xIsNext: true },
+    ]);
+    setActiveId(id);
+  }
+
+  function handlePlay(nextSquares) {
+    setGames(
+      games.map((g) =>
+        g.id === activeId
+          ? { ...g, squares: nextSquares, xIsNext: !g.xIsNext }
+          : g
+      )
+    );
+  }
+
+  const activeGame = games.find((g) => g.id === activeId);
+
   return (
     <div className="game">
       <h1>Tic-Tac-Toe</h1>
-      <div className="status">
-        {winner ? `Winner: ${winner}` : `Next player: ${xIsNext ? 'X' : 'O'}`}
+      <p>{message}</p>
+      <div className="tabs">
+        {games.map((game, index) => (
+          <button
+            key={game.id}
+            className={game.id === activeId ? 'active-tab' : ''}
+            onClick={() => setActiveId(game.id)}
+          >
+            Game {index + 1}
+          </button>
+        ))}
+        <button onClick={addGame}>New Game</button>
       </div>
-      <div className="board">
-        <div className="board-row">
-          {renderSquare(0)}
-          {renderSquare(1)}
-          {renderSquare(2)}
+      {activeGame && (
+        <div className="board">
+          <GameBoard
+            squares={activeGame.squares}
+            xIsNext={activeGame.xIsNext}
+            onPlay={handlePlay}
+          />
         </div>
-        <div className="board-row">
-          {renderSquare(3)}
-          {renderSquare(4)}
-          {renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {renderSquare(6)}
-          {renderSquare(7)}
-          {renderSquare(8)}
-        </div>
-      </div>
-      <button className="btn" onClick={resetGame}>Reset</button>
+      )}
     </div>
   );
 }
