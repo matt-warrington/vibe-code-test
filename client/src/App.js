@@ -1,21 +1,53 @@
 import React, { useEffect, useState, useRef } from 'react';
 import GameBoard from './GameBoard';
+import Chat from './Chat';
+import './Chat.css';
 import './App.css';
 
-function App() {
-  const [message, setMessage] = useState('');
-  const [games, setGames] = useState([
-    { id: 0, squares: Array(9).fill(null), xIsNext: true },
-  ]);
-  const [activeId, setActiveId] = useState(0);
-  const nextId = useRef(1);
+function calculateWinner(squares) {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  for (const [a, b, c] of lines) {
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
+    }
+  }
+  return null;
+}
 
-  useEffect(() => {
-    fetch('/api/message')
-      .then((res) => res.json())
-      .then((data) => setMessage(data.message))
-      .catch(() => setMessage('Error fetching message'));
-  }, []);
+function App() {
+  const [squares, setSquares] = useState(Array(9).fill(null));
+  const [xIsNext, setXIsNext] = useState(true);
+  const winner = calculateWinner(squares);
+
+  function handleClick(i) {
+    if (winner || squares[i]) return;
+    const next = squares.slice();
+    next[i] = xIsNext ? 'X' : 'O';
+    setSquares(next);
+    setXIsNext(!xIsNext);
+  }
+
+  function renderSquare(i) {
+    return (
+      <button className="square" onClick={() => handleClick(i)}>
+        {squares[i]}
+      </button>
+    );
+  }
+
+  function resetGame() {
+    setSquares(Array(9).fill(null));
+    setXIsNext(true);
+  }
 
   function addGame() {
     const id = nextId.current++;
