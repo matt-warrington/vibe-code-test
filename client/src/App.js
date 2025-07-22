@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import Chat from './Chat';
+import './Chat.css';
 import './App.css';
 
 function calculateWinner(squares) {
