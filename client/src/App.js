@@ -39,8 +39,8 @@ function App() {
   const activeGame = games.find((g) => g.id === activeId);
 
   return (
-    <div>
-      <h1>React + Node</h1>
+    <div className="game">
+      <h1>Tic-Tac-Toe</h1>
       <p>{message}</p>
       <div className="tabs">
         {games.map((game, index) => (
@@ -55,11 +55,13 @@ function App() {
         <button onClick={addGame}>New Game</button>
       </div>
       {activeGame && (
-        <GameBoard
-          squares={activeGame.squares}
-          xIsNext={activeGame.xIsNext}
-          onPlay={handlePlay}
-        />
+        <div className="board">
+          <GameBoard
+            squares={activeGame.squares}
+            xIsNext={activeGame.xIsNext}
+            onPlay={handlePlay}
+          />
+        </div>
       )}
     </div>
   );
