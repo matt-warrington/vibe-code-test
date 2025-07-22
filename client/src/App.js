@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import Chat from './Chat';
+import './Chat.css';
 
 function App() {
   const [message, setMessage] = useState('');
@@ -14,6 +16,7 @@ function App() {
     <div>
       <h1>React + Node</h1>
       <p>{message}</p>
+      <Chat />
     </div>
   );
 }
